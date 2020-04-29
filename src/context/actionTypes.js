@@ -1,0 +1,3 @@
+export const SEARCH_POSTS = "SEARCH_POSTS"
+export const FETCH_POSTS = "FETCH_POSTS_SUCCESS"
+export const UPDATE_STATUS = "UPDATE_STATUS"

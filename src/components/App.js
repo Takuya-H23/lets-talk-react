@@ -1,19 +1,23 @@
 /** @jsx jsx */
+import { useContext, useEffect } from "react"
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import GlobalCss from "./GlobalCss"
-import { useQuery } from "@apollo/react-hooks"
-import { POSTS } from "../graphql/query"
+import Header from "./Header"
+import { PostsContext } from "./../context/postsContext"
 
 function App() {
-  const { loading, error, data } = useQuery(POSTS)
+  const { fetchPosts, posts } = useContext(PostsContext)
 
-  if (loading) return <div>Loading...</div>
+  useEffect(() => {
+    fetchPosts()
+  }, [])
 
-  console.log(data)
+  console.log(posts)
   return (
     <div className="App">
       <GlobalCss />
+      <Header />
       <Main>
         <div>here</div>
       </Main>

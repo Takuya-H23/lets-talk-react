@@ -4,11 +4,14 @@ import App from "./components/App"
 import { ApolloProvider } from "@apollo/react-hooks"
 import client from "./graphql/client"
 import * as serviceWorker from "./serviceWorker"
+import PostsProvider from "./context/postsContext"
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <PostsProvider>
+        <App />
+      </PostsProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
