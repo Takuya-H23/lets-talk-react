@@ -339,6 +339,10 @@ const globalCss = css`
     font-size: 1.6rem;
     font-family: "Mukta", sans-serif;
   }
+
+  a {
+    text-decoration: none;
+  }
 `
 
 export default GlobalCss

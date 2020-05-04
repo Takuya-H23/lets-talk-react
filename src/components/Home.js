@@ -26,11 +26,19 @@ function Home() {
 
   return (
     <Section>
-      {posts.map((post, index) => (
-        <PostCard key={`post-${index}`} {...post} />
-      ))}
+      <Ul>
+        {posts.map((post, index) => (
+          <PostCard key={`post-${index}`} {...post} />
+        ))}
+      </Ul>
     </Section>
   )
 }
+
+const Ul = styled.ul`
+  list-style: none;
+  display: grid;
+  row-gap: 2rem;
+`
 
 export default Home

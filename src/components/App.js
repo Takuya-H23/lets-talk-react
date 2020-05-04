@@ -29,7 +29,7 @@ function App() {
 }
 
 const Main = styled.main`
-  width: 120rem;
+  max-width: 120rem;
   margin: 6.4rem auto 0;
 `
 export default App
