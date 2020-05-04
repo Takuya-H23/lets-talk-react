@@ -3,30 +3,33 @@ import { useContext, useEffect } from "react"
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import GlobalCss from "./GlobalCss"
+import { Switch, Route } from "react-router-dom"
 import Header from "./Header"
+import Home from "./Home"
 import { PostsContext } from "./../context/postsContext"
 
 function App() {
-  const { fetchPosts, posts } = useContext(PostsContext)
+  const { fetchPosts } = useContext(PostsContext)
 
   useEffect(() => {
     fetchPosts()
   }, [])
 
-  console.log(posts)
   return (
     <div className="App">
       <GlobalCss />
       <Header />
-      <Main>
-        <div>here</div>
-      </Main>
+      <Switch>
+        <Main>
+          <Home exact path="/" />
+        </Main>
+      </Switch>
     </div>
   )
 }
 
 const Main = styled.main`
   width: 120rem;
-  margin: 0 auto;
+  margin: 6.4rem auto 0;
 `
 export default App

@@ -1,0 +1,36 @@
+/**@jsx jsx */
+import { useContext } from "react"
+import { jsx } from "@emotion/core"
+import { PostsContext, status as postStatus } from "./../context/postsContext"
+import styled from "@emotion/styled"
+import Section from "./elements/Section"
+import PostCard from "./elements/PostCard"
+
+function Home() {
+  const { posts, status } = useContext(PostsContext)
+
+  if (status === postStatus.IDLE) {
+    return <div>Idling...</div>
+  }
+
+  if (status === postStatus.PENDING) {
+    return <Section>Loading...</Section>
+  }
+
+  if (status === postStatus.REJECTED) {
+    return <Section>Something went wrong</Section>
+  }
+
+  const post = posts[0]
+  console.log(post)
+
+  return (
+    <Section>
+      {posts.map((post, index) => (
+        <PostCard key={`post-${index}`} {...post} />
+      ))}
+    </Section>
+  )
+}
+
+export default Home
