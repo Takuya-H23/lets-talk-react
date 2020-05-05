@@ -21,9 +21,6 @@ function Home() {
     return <Section>Something went wrong</Section>
   }
 
-  const post = posts[0]
-  console.log(post)
-
   return (
     <Section>
       <Ul>

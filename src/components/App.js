@@ -6,6 +6,7 @@ import GlobalCss from "./GlobalCss"
 import { Switch, Route } from "react-router-dom"
 import Header from "./Header"
 import Home from "./Home"
+import PostDetail from "./PostDetail"
 import { PostsContext } from "./../context/postsContext"
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
       <Header />
       <Switch>
         <Main>
-          <Home exact path="/" />
+          <Route exact path="/" component={Home} />
+          <Route path="/post/:id" component={PostDetail} />
         </Main>
       </Switch>
     </div>
