@@ -10,25 +10,29 @@ function PostCard({ id, name, text, comments, updatedAt, createdAt }) {
     <Li>
       <Link to={`/post/${id}`}>
         <H2>{text}</H2>
-        <div>
-          <span>by {name}</span>
-          <span>
+        <TitleWrapper>
+          <Span>by {name}</Span>
+          <Span>
             {createdAt === updatedAt
               ? `created at ${formatDate(createdAt)}`
               : `updated at ${formatDate(updatedAt)}`}
-          </span>
-        </div>
+          </Span>
+        </TitleWrapper>
         <div>
-          <span>
+          <Span secondary>
             {comments.length
               ? `${comments.length} comment${comments.length === 1 ? "" : "s"}`
               : `No comment yet`}
-          </span>
+          </Span>
         </div>
       </Link>
     </Li>
   )
 }
+
+const TitleWrapper = styled.div`
+  margin-bottom: 1rem;
+`
 
 const H2 = styled.h2`
   color: ${colors.black};
@@ -36,10 +40,12 @@ const H2 = styled.h2`
   font-weight: 600;
   margin-bottom: 1rem;
 `
-
 const Li = styled.li`
   border: 1px solid ${colors.rhythm};
   padding: 1rem;
 `
+const Span = styled.span(({ secondary = false }) => ({
+  color: secondary ? colors.rhythm : colors.salmon,
+}))
 
 export default PostCard
