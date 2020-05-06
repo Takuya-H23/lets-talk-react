@@ -2,15 +2,24 @@
 import { css, jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import PropTypes from "prop-types"
+import { useMutation } from "@apollo/react-hooks"
+import { useHistory } from "react-router-dom"
+import { UPDATE_POST } from "../../graphql/mutation"
 import { AiFillEdit, AiFillDelete } from "react-icons/ai"
 import colors from "../../assets/colors"
 
 export default function Options({ id, type }) {
+  const [updatePost] = useMutation(UPDATE_POST)
+
   return (
     <div>
       <AiFillEdit
         css={[icon, editIcon]}
-        onClick={() => console.log(`${type}id => ${id} on edit`)}
+        onClick={() =>
+          updatePost({
+            variables: { key: "yoyoyo", input: { id, text: "hello world" } },
+          })
+        }
       />
       <AiFillDelete
         css={[icon]}
