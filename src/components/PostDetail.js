@@ -2,8 +2,8 @@
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import { useParams } from "react-router-dom"
-import { gql } from "apollo-boost"
 import { useQuery } from "@apollo/react-hooks"
+import { GET_POST } from "../graphql/query"
 import Section from "./elements/Section"
 import Info from "./elements/Info"
 import Comments from "./Comments"
@@ -12,25 +12,9 @@ import colors from "../assets/colors"
 export default function PostDetail() {
   const { id: postId } = useParams()
 
-  const GET_A_POST = gql`
-    query {
-      post(id: "${postId}") {
-        id
-        name
-        text
-        createdAt
-        updatedAt
-        comments {
-          id
-          name
-          text
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  `
-  const { loading, error, data } = useQuery(GET_A_POST)
+  const { loading, error, data } = useQuery(GET_POST, {
+    variables: { id: postId },
+  })
 
   if (loading) return <Section>Loading...</Section>
 
