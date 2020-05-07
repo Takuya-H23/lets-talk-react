@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import { useContext, useEffect } from "react"
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import GlobalCss from "./GlobalCss"
@@ -7,22 +6,22 @@ import { Switch, Route } from "react-router-dom"
 import Header from "./Header"
 import Home from "./Home"
 import PostDetail from "./PostDetail"
-import { PostsContext } from "./../context/postsContext"
+import { useQuery } from "@apollo/react-hooks"
+import { GET_POSTS } from "../graphql/query"
 
 function App() {
-  const { fetchPosts } = useContext(PostsContext)
+  const { loading, error, data } = useQuery(GET_POSTS)
 
-  useEffect(() => {
-    fetchPosts()
-  }, [])
-
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Ops</p>
   return (
     <div className="App">
       <GlobalCss />
       <Header />
       <Switch>
         <Main>
-          <Route exact path="/" component={Home} />
+          {/* <Route exact path="/" component={Home} /> */}
+          <Route exact path="/" render={() => <Home posts={data.posts} />} />
           <Route path="/post/:id" component={PostDetail} />
         </Main>
       </Switch>
