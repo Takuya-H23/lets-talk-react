@@ -18,3 +18,21 @@ export const UPDATE_POST = gql`
     }
   }
 `
+export const DELETE_POST = gql`
+  mutation DeletePost($key: String!, $input: DeletePostInput) {
+    deletePost(key: $key, input: $input) {
+      id
+      name
+      text
+      createdAt
+      updatedAt
+      comments {
+        id
+        name
+        text
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`

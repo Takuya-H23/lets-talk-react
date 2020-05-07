@@ -1,30 +1,21 @@
 /**@jsx jsx */
-import { useContext } from "react"
 import { jsx } from "@emotion/core"
-import { PostsContext, status as postStatus } from "./../context/postsContext"
+import { useQuery } from "@apollo/react-hooks"
+import { GET_POSTS } from "../graphql/query"
 import styled from "@emotion/styled"
 import Section from "./elements/Section"
 import PostCard from "./elements/PostCard"
 
 function Home() {
-  const { posts, status } = useContext(PostsContext)
+  const { loading, error, data } = useQuery(GET_POSTS)
 
-  if (status === postStatus.IDLE) {
-    return <div>Idling...</div>
-  }
-
-  if (status === postStatus.PENDING) {
-    return <Section>Loading...</Section>
-  }
-
-  if (status === postStatus.REJECTED) {
-    return <Section>Something went wrong</Section>
-  }
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Ops</p>
 
   return (
     <Section>
       <Ul>
-        {posts.map((post, index) => (
+        {data.posts.map((post, index) => (
           <PostCard key={`post-${index}`} {...post} />
         ))}
       </Ul>
