@@ -1,8 +1,8 @@
 import { gql } from "apollo-boost"
 
-export const GET_POSTS = gql`
-  query {
-    posts {
+export const UPDATE_POST = gql`
+  mutation UpdatePost($key: String!, $input: UpdatePostInput) {
+    updatePost(key: $key, input: $input) {
       id
       name
       text
@@ -18,10 +18,9 @@ export const GET_POSTS = gql`
     }
   }
 `
-
-export const GET_POST = gql`
-  query Post($id: ID!) {
-    post(id: $id) {
+export const DELETE_POST = gql`
+  mutation DeletePost($key: String!, $input: DeletePostInput) {
+    deletePost(key: $key, input: $input) {
       id
       name
       text
