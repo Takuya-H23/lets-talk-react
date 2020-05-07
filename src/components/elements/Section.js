@@ -3,8 +3,8 @@ import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import PropTypes from "prop-types"
 
-function Section({ children }) {
-  return <SectionS>{children}</SectionS>
+function Section({ children, className }) {
+  return <SectionS className={className}>{children}</SectionS>
 }
 
 const SectionS = styled.section(props => ({

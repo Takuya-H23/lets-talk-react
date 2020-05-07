@@ -20,7 +20,6 @@ function App() {
       <Header />
       <Switch>
         <Main>
-          {/* <Route exact path="/" component={Home} /> */}
           <Route exact path="/" render={() => <Home posts={data.posts} />} />
           <Route path="/post/:id" component={PostDetail} />
         </Main>
