@@ -1,4 +1,5 @@
 /**@jsx jsx */
+import { useState } from "react"
 import { jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import { useParams } from "react-router-dom"
@@ -8,8 +9,10 @@ import Section from "./elements/Section"
 import Info from "./elements/Info"
 import Comments from "./Comments"
 import colors from "../assets/colors"
+import Modal from "./elements/Modal"
 
 export default function PostDetail() {
+  const [commentModal, setCommentModal] = useState(false)
   const { id: postId } = useParams()
 
   const { loading, error, data } = useQuery(GET_POST, {
@@ -35,6 +38,14 @@ export default function PostDetail() {
         <H1>{text}</H1>
       </PostWrapper>
       {comments.length > 0 && <Comments comments={comments} />}
+      <button type="button" onClick={() => setCommentModal(!commentModal)}>
+        comment modal
+      </button>
+      {commentModal && (
+        <Modal onClick={() => setCommentModal(!commentModal)}>
+          <p>comment modal</p>
+        </Modal>
+      )}
     </Section>
   )
 }
@@ -44,7 +55,6 @@ const PostWrapper = styled.div`
   border-bottom: 1.5px solid ${colors.salmon};
   padding-bottom: 1rem;
 `
-
 const H1 = styled.h1`
   color: ${colors.black};
   font-size: 2.5rem;
