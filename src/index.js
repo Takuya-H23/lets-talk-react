@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import App from "./components/App"
+import "antd/dist/antd.css"
 import { ApolloProvider } from "@apollo/react-hooks"
 import client from "./graphql/client"
 import { BrowserRouter as Router } from "react-router-dom"

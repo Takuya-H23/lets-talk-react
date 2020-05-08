@@ -12,7 +12,7 @@ import colors from "../assets/colors"
 import Modal from "./elements/Modal"
 
 export default function PostDetail() {
-  const [showModal, setShowModal] = useState(true)
+  const [commentModal, setCommentModal] = useState(false)
   const { id: postId } = useParams()
 
   const { loading, error, data } = useQuery(GET_POST, {
@@ -38,18 +38,12 @@ export default function PostDetail() {
         <H1>{text}</H1>
       </PostWrapper>
       {comments.length > 0 && <Comments comments={comments} />}
-      <button
-        type="button"
-        onClick={() => {
-          console.log(showModal)
-          setShowModal(!showModal)
-        }}
-      >
-        modal
+      <button type="button" onClick={() => setCommentModal(!commentModal)}>
+        comment modal
       </button>
-      {showModal && (
-        <Modal onClick={() => setShowModal(!showModal)}>
-          <div>yoyoyoyoyoyoy</div>
+      {commentModal && (
+        <Modal onClick={() => setCommentModal(!commentModal)}>
+          <p>comment modal</p>
         </Modal>
       )}
     </Section>
