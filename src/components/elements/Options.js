@@ -4,22 +4,22 @@ import { css, jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import PropTypes from "prop-types"
 import { useMutation } from "@apollo/react-hooks"
+import { AiFillEdit, AiFillDelete } from "react-icons/ai"
 import { useHistory } from "react-router-dom"
+import useInput from "./../hooks/useInput"
 import { UPDATE_POST, DELETE_POST } from "../../graphql/mutation"
 import { GET_POSTS } from "../../graphql/query"
-import { AiFillEdit, AiFillDelete } from "react-icons/ai"
 import colors from "../../assets/colors"
 import Modal from "./Modal"
 import validateString from "../../functions/validateString"
-import { Alert } from "antd"
+import { message } from "antd"
 
 export default function Options({ id, type }) {
   const [showModal, setShowModal] = useState(false)
   const [currentModal, setCurrentModal] = useState(null)
-  const [key, setKey] = useState("")
   const [keyError, setKeyError] = useState(null)
-  const [error, setError] = useState(null)
   const history = useHistory()
+  const [key, bind] = useInput("")
 
   const [updatePost] = useMutation(UPDATE_POST)
 
@@ -32,16 +32,16 @@ export default function Options({ id, type }) {
       })
     },
     onError: () => {
-      setError("Something went wrong. Was your key correct?")
+      message.error("Something went wrong. Was your key correct?")
     },
     onCompleted: () => {
       history.push("/")
     },
   })
 
-  function handleOnChange(e) {
-    setKey(e.target.value)
-  }
+  // function handleOnChange(e) {
+  //   setKey(e.target.value)
+  // }
 
   function handleOnSubmit(requestFn, errorFn) {
     return function getVariable(obj) {
@@ -65,7 +65,6 @@ export default function Options({ id, type }) {
     setShowModal(true)
   }
 
-  if (error) return <Alert message={error} type="error" showIcon />
   return (
     <div>
       <AiFillEdit
@@ -81,12 +80,9 @@ export default function Options({ id, type }) {
       />
       <AiFillDelete
         css={[icon]}
-        onClick={
-          () => {
-            openModal("delete")
-          }
-          // deletePost({ variables: { key: "yoyoyo", input: { id } } })
-        }
+        onClick={() => {
+          openModal("delete")
+        }}
       />
       {showModal && currentModal === "update" && (
         <Modal onClick={closeModal}></Modal>
@@ -107,7 +103,7 @@ export default function Options({ id, type }) {
               id="delete"
               type="text"
               value={key}
-              onChange={handleOnChange}
+              onChange={bind.onChange}
             />
             {keyError ? <p>{keyError}</p> : null}
           </form>
