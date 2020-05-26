@@ -11,7 +11,7 @@ import { UPDATE_POST, DELETE_POST } from "../../graphql/mutation"
 import { GET_POSTS } from "../../graphql/query"
 import colors from "../../assets/colors"
 import Modal from "./Modal"
-import validateString from "../../functions/validateString"
+import { validatePayload } from "../../functions/validations"
 import { message } from "antd"
 
 export default function Options({ id, type }) {
@@ -39,20 +39,10 @@ export default function Options({ id, type }) {
     },
   })
 
-  // function handleOnChange(e) {
-  //   setKey(e.target.value)
-  // }
-
-  function handleOnSubmit(requestFn, errorFn) {
-    return function getVariable(obj) {
-      return function checkArgs(...args) {
-        const areValid = args.map(validateString)
-        if (areValid.every(Boolean)) {
-          return requestFn(obj)
-        }
-        errorFn("Please enter a valid value")
-      }
-    }
+  function sendRequest(key, input) {
+    validatePayload(key, ...Object.values(input))
+      ? deletePost({ variables: { key, input } })
+      : setKeyError()
   }
 
   function closeModal() {
@@ -92,10 +82,7 @@ export default function Options({ id, type }) {
           <form
             onSubmit={e => {
               e.preventDefault()
-              handleOnSubmit(
-                deletePost,
-                setKeyError
-              )({ variables: { key, input: { id } } })(key)
+              sendRequest(key, { id })
             }}
           >
             <label htmlFor="delete">Key:</label>
