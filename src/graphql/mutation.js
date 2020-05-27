@@ -18,6 +18,7 @@ export const UPDATE_POST = gql`
     }
   }
 `
+
 export const DELETE_POST = gql`
   mutation DeletePost($key: String!, $input: DeletePostInput) {
     deletePost(key: $key, input: $input) {
@@ -33,6 +34,18 @@ export const DELETE_POST = gql`
         createdAt
         updatedAt
       }
+    }
+  }
+`
+
+export const UPDATE_COMMENT = gql`
+  mutation UpdateComment($key: String!, $input: UpdateCommentInput) {
+    updateComment(key: $key, input: $input) {
+      id
+      name
+      text
+      createdAt
+      updatedAt
     }
   }
 `
