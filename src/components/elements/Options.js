@@ -3,7 +3,6 @@ import { useState } from "react"
 import { css, jsx } from "@emotion/core"
 import styled from "@emotion/styled"
 import PropTypes from "prop-types"
-import { compose, curry } from "ramda"
 import { useMutation } from "@apollo/react-hooks"
 import { AiFillEdit, AiFillDelete } from "react-icons/ai"
 import { useHistory } from "react-router-dom"
@@ -12,7 +11,7 @@ import { UPDATE_POST, DELETE_POST } from "../../graphql/mutation"
 import { GET_POSTS } from "../../graphql/query"
 import colors from "../../assets/colors"
 import Modal from "./Modal"
-import { validatePayload, validateInputs } from "../../functions/validations"
+import { sendRequest } from "../../functions/api"
 import { message } from "antd"
 
 export default function Options({ id, type }) {
@@ -41,31 +40,6 @@ export default function Options({ id, type }) {
       history.push("/")
     },
   })
-
-  // function sendRequest(key, input) {
-  //   validatePayload(key, ...Object.values(input))
-  //     ? deletePost({ variables: { key, input } })
-  //     : setKeyError("Please enter a valid value")
-  // }
-
-  // const inputs = validateInputs([{ key: key, errorFn: setKeyError }])
-  // const test = inputs => {
-  //   !inputs.length
-  //     ? deletePost({ variables: { key, input: { id } } })
-  //     : inputs.map(x => x.errorFn(`${Object.keys(x)[0]} is not valid`))
-  // }
-  // const test = inputs => {
-  //   !inputs.length
-  //     ? deletePost({ variables: { key, input: { id } } })
-  //     : inputs.map(x => x.errorFn(`${Object.keys(x)[0]} is not valid`))
-  // }
-
-  const generateRequestCallback = inputs =>
-    !inputs.length
-      ? f => f()
-      : () => inputs.map(x => x.errorFn(`${Object.keys(x)[0]} is not valid`))
-
-  const sendRequest = compose(generateRequestCallback, validateInputs)
 
   function sendUpdateRequest() {
     // updatePost({ variables: { key, input: { id, text: post } } })
@@ -100,7 +74,6 @@ export default function Options({ id, type }) {
           <form
             onSubmit={e => {
               e.preventDefault()
-
               sendRequest([
                 { key, errorFn: setKeyError },
                 { post, errorFn: setPostError },
