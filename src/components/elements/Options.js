@@ -23,7 +23,14 @@ export default function Options({ id, type }) {
   const [key, keyBind] = useInput("")
   const [post, postBind] = useInput("")
 
-  const [updatePost] = useMutation(UPDATE_POST)
+  const [updatePost] = useMutation(UPDATE_POST, {
+    onError: error => {
+      message.error(error.message + " ? Was your key correct?")
+    },
+    onCompleted: () => {
+      setShowModal(false)
+    },
+  })
 
   const [deletePost] = useMutation(DELETE_POST, {
     update(cache, { data: { deletePost } }) {
@@ -33,8 +40,8 @@ export default function Options({ id, type }) {
         data: { posts: posts.filter(post => post.id !== deletePost.id) },
       })
     },
-    onError: () => {
-      message.error("Something went wrong. Was your key correct?")
+    onError: error => {
+      message.error(error.message + " ? Was your key correct?")
     },
     onCompleted: () => {
       history.push("/")
@@ -42,8 +49,7 @@ export default function Options({ id, type }) {
   })
 
   function sendUpdateRequest() {
-    // updatePost({ variables: { key, input: { id, text: post } } })
-    console.log("nice")
+    updatePost({ variables: { key, input: { id, text: post } } })
   }
 
   function sendDeleteRequest() {
