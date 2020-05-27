@@ -8,7 +8,7 @@ import formatDate from "../../functions/formatDate"
 export default function NameAndDate({ name, createdAt, updatedAt }) {
   return (
     <Span>
-      by {name}{" "}
+      {name}{" "}
       {createdAt === updatedAt
         ? `created at ${formatDate(createdAt)}
         `
