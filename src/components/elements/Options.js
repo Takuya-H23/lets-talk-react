@@ -11,8 +11,9 @@ import {
   UPDATE_POST,
   DELETE_POST,
   UPDATE_COMMENT,
+  DELETE_COMMENT,
 } from "../../graphql/mutation"
-import { GET_POSTS } from "../../graphql/query"
+import { GET_POSTS, GET_POST } from "../../graphql/query"
 import colors from "../../assets/colors"
 import Modal from "./Modal"
 import { sendRequest } from "../../functions/api"
@@ -37,12 +38,8 @@ export default function Options({ postId, commentId, type }) {
   })
 
   const [updateComment] = useMutation(UPDATE_COMMENT, {
-    onError: error => {
-      message.error(error.message + " ? Was your key correct?")
-    },
-    onCompleted: () => {
-      setShowModal(false)
-    },
+    onError: error => message.error(error.message + " ? Was your key correct?"),
+    onCompleted: () => setShowModal(false),
   })
 
   const [deletePost] = useMutation(DELETE_POST, {
@@ -53,12 +50,41 @@ export default function Options({ postId, commentId, type }) {
         data: { posts: posts.filter(post => post.id !== deletePost.id) },
       })
     },
-    onError: error => {
-      message.error(error.message + " ? Was your key correct?")
+    onError: error => message.error(error.message + " ? Was your key correct?"),
+    onCompleted: () => history.push("/"),
+  })
+
+  const [deleteComment] = useMutation(DELETE_COMMENT, {
+    update(cache, { data: { deleteComment } }) {
+      const { post } = cache.readQuery({
+        query: GET_POST,
+        variables: { id: postId },
+      })
+      const { posts } = cache.readQuery({ query: GET_POSTS })
+      cache.writeQuery({
+        query: GET_POSTS,
+        data: {
+          posts: posts.map(post => {
+            if (post.id !== postId) return post
+            const newPost = { ...post }
+            newPost.comment = post.comments.filter(
+              comment => comment.id !== commentId
+            )
+            return newPost
+          }),
+        },
+      })
+      cache.writeQuery({
+        query: GET_POST,
+        data: {
+          post: {
+            ...post,
+            comments: post.comments.filter(comment => comment.id !== commentId),
+          },
+        },
+      })
     },
-    onCompleted: () => {
-      history.push("/")
-    },
+    onError: error => message.error(error.message + " ? Was your key correct?"),
   })
 
   function sendUpdateRequest() {
@@ -68,7 +94,9 @@ export default function Options({ postId, commentId, type }) {
   }
 
   function sendDeleteRequest() {
-    deletePost({ variables: { key, input: { id: postId } } })
+    type === "post"
+      ? deletePost({ variables: { key, input: { id: postId } } })
+      : deleteComment({ variables: { key, input: { id: commentId } } })
   }
 
   function closeModal() {
@@ -84,12 +112,8 @@ export default function Options({ postId, commentId, type }) {
   return (
     <div>
       <AiFillEdit css={[icon, editIcon]} onClick={() => openModal("update")} />
-      <AiFillDelete
-        css={[icon]}
-        onClick={() => {
-          openModal("delete")
-        }}
-      />
+      <AiFillDelete css={[icon]} onClick={() => openModal("delete")} />
+
       {showModal && currentModal === "update" && (
         <Modal onClick={closeModal} title={`Update ${type}`}>
           <form
@@ -123,6 +147,7 @@ export default function Options({ postId, commentId, type }) {
           </form>
         </Modal>
       )}
+
       {showModal && currentModal === "delete" && (
         <Modal onClick={closeModal} title={`Delete ${type}`}>
           <form

@@ -49,3 +49,15 @@ export const UPDATE_COMMENT = gql`
     }
   }
 `
+
+export const DELETE_COMMENT = gql`
+  mutation DeleteComment($key: String!, $input: DeleteCommentInput) {
+    deleteComment(key: $key, input: $input) {
+      id
+      name
+      text
+      createdAt
+      updatedAt
+    }
+  }
+`
