@@ -5,17 +5,25 @@ import PropTypes from "prop-types"
 import Options from "./Options"
 import NameAndDate from "./NameAndDate"
 
-export default function Info({ id, name, createdAt, updatedAt, type }) {
+export default function Info({
+  postId,
+  commentId,
+  name,
+  createdAt,
+  updatedAt,
+  type,
+}) {
   return (
     <InfoWrapper>
       <NameAndDate name={name} createdAt={createdAt} updatedAt={updatedAt} />
-      <Options id={id} type={type} />
+      <Options postId={postId} commentId={commentId} type={type} />
     </InfoWrapper>
   )
 }
 
 Info.propTypes = {
-  id: PropTypes.string.isRequired,
+  postId: PropTypes.string,
+  commentId: PropTypes.string,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,

@@ -6,7 +6,7 @@ import PropTypes from "prop-types"
 import colors from "../assets/colors"
 import Info from "./elements/Info"
 
-export default function Comments({ comments }) {
+export default function Comments({ comments, postId }) {
   return (
     <Fragment>
       <P>
@@ -16,7 +16,8 @@ export default function Comments({ comments }) {
         {comments.map(comment => (
           <Li key={comment.id}>
             <Info
-              id={comment.id}
+              postId={postId}
+              commentId={comment.id}
               type="comment"
               name={comment.name}
               createdAt={comment.createdAt}
@@ -31,6 +32,7 @@ export default function Comments({ comments }) {
 }
 
 Comments.propTypes = {
+  postId: PropTypes.string,
   comments: PropTypes.array.isRequired,
 }
 

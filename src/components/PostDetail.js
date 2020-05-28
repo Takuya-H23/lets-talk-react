@@ -29,7 +29,7 @@ export default function PostDetail() {
     <Section>
       <PostWrapper>
         <Info
-          id={id}
+          postId={id}
           type="post"
           name={name}
           createdAt={createdAt}
@@ -37,7 +37,7 @@ export default function PostDetail() {
         />
         <H1>{text}</H1>
       </PostWrapper>
-      {comments.length > 0 && <Comments comments={comments} />}
+      {comments.length > 0 && <Comments comments={comments} postId={id} />}
       <button type="button" onClick={() => setCommentModal(!commentModal)}>
         comment modal
       </button>
@@ -57,5 +57,8 @@ const PostWrapper = styled.div`
 `
 const H1 = styled.h1`
   color: ${colors.black};
-  font-size: 2.5rem;
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-top: 1rem;
+  margin-right: 2rem;
 `

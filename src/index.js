@@ -11,11 +11,11 @@ import PostsProvider from "./context/postsContext"
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <PostsProvider>
-        <Router>
-          <App />
-        </Router>
-      </PostsProvider>
+      {/* <PostsProvider> */}
+      <Router>
+        <App />
+      </Router>
+      {/* </PostsProvider> */}
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
