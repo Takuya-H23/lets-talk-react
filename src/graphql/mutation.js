@@ -57,6 +57,18 @@ export const DELETE_POST = gql`
   }
 `
 
+export const CREATE_COMMENT = gql`
+  mutation CreateComment($key: String!, $input: CreateCommentInput) {
+    createComment(key: $key, input: $input) {
+      id
+      name
+      text
+      createdAt
+      updatedAt
+    }
+  }
+`
+
 export const UPDATE_COMMENT = gql`
   mutation UpdateComment($key: String!, $input: UpdateCommentInput) {
     updateComment(key: $key, input: $input) {
