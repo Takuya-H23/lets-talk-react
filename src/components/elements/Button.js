@@ -4,9 +4,20 @@ import styled from "@emotion/styled"
 import PropTypes from "prop-types"
 import colors from "../../assets/colors"
 
-function Button({ children, onClick, type = "button", center = false }) {
+function Button({
+  children,
+  onClick,
+  type = "button",
+  center = false,
+  className,
+}) {
   return (
-    <ButtonS type={type} onClick={onClick} center={center}>
+    <ButtonS
+      type={type}
+      onClick={onClick}
+      center={center}
+      className={className}
+    >
       {children}
     </ButtonS>
   )
@@ -14,7 +25,8 @@ function Button({ children, onClick, type = "button", center = false }) {
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  className: PropTypes.string,
 }
 
 const ButtonS = styled.button(({ center }) => ({

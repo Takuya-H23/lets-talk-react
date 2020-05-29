@@ -1,5 +1,24 @@
 import { gql } from "apollo-boost"
 
+export const CREATE_POST = gql`
+  mutation CreatePost($key: String!, $input: CreatePostInput) {
+    createPost(key: $key, input: $input) {
+      id
+      name
+      text
+      createdAt
+      updatedAt
+      comments {
+        id
+        name
+        text
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`
+
 export const UPDATE_POST = gql`
   mutation UpdatePost($key: String!, $input: UpdatePostInput) {
     updatePost(key: $key, input: $input) {
