@@ -30,7 +30,7 @@ function Home({ posts }) {
         data: { posts: [createPost, ...posts] },
       })
     },
-    onError: error => message.error(error.message + " ? Was your key correct?"),
+    onError: error => message.error(error.message),
     onCompleted: () => closeModal(),
   })
 
