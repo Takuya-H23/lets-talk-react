@@ -10,6 +10,7 @@ import Info from "./elements/Info"
 import Comments from "./Comments"
 import colors from "../assets/colors"
 import Modal from "./elements/Modal"
+import Button from "./elements/Button"
 
 export default function PostDetail() {
   const [commentModal, setCommentModal] = useState(false)
@@ -38,9 +39,9 @@ export default function PostDetail() {
         <H1>{text}</H1>
       </PostWrapper>
       {comments.length > 0 && <Comments comments={comments} postId={id} />}
-      <button type="button" onClick={() => setCommentModal(!commentModal)}>
-        comment modal
-      </button>
+      <Button onClick={() => setCommentModal(!commentModal)} center>
+        Add comment
+      </Button>
       {commentModal && (
         <Modal onClick={() => setCommentModal(!commentModal)}>
           <p>comment modal</p>

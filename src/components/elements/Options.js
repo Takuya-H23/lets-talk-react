@@ -136,12 +136,7 @@ export default function Options({ postId, commentId, type }) {
             <label htmlFor="update">
               {type === "post" ? "Post" : "Comment"}
             </label>
-            <input
-              type="text"
-              id="update"
-              value={text}
-              onChange={textBind.onChange}
-            />
+            <textarea id="update" value={text} onChange={textBind.onChange} />
             {textError ? <p>{textError}</p> : null}
             <button type="submit">Send</button>
           </form>
