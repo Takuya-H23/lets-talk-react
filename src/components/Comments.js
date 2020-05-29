@@ -13,7 +13,6 @@ export default function Comments({ comments, postId }) {
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     )
   }
-
   const sortedComments = sortComments()
 
   return (

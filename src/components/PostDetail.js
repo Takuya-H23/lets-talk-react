@@ -31,13 +31,21 @@ export default function PostDetail() {
   })
 
   const [createComment] = useMutation(CREATE_COMMENT, {
-    // update(cache, { data: { createPost } }) {
-    //   const { posts } = cache.readQuery({ query: GET_POSTS })
-    //   cache.writeQuery({
-    //     query: GET_POSTS,
-    //     data: { posts: [createPost, ...posts] },
-    //   })
-    // },
+    update(cache, { data: { createComment } }) {
+      const { posts } = cache.readQuery({ query: GET_POSTS })
+      const _posts = posts.map(post => {
+        if (post.id !== postId) return post
+        post.comments = [createComment, ...post.comments]
+        return post
+      })
+
+      cache.writeQuery({
+        query: GET_POSTS,
+        data: {
+          posts: _posts,
+        },
+      })
+    },
     onError: error => message.error(error.message),
     onCompleted: () => setShowModal(false),
   })
