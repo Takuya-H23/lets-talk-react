@@ -8,7 +8,7 @@ import Section from "./Section"
 import colors from "../../assets/colors"
 import { AiOutlineCloseCircle } from "react-icons/ai"
 
-export default function Modal({ children, onClick, title }) {
+export default function Modal({ children, onClick, title, className }) {
   const elRef = useRef(null)
   if (!elRef.current) {
     const div = document.createElement("div")
@@ -26,7 +26,7 @@ export default function Modal({ children, onClick, title }) {
 
   return createPortal(
     <ModalBackground>
-      <Container>
+      <Container className={className}>
         <HeaderS title={title}>
           {title ? <Title>{title}</Title> : null}
           <CloseIcon onClick={onClick}>
@@ -41,6 +41,7 @@ export default function Modal({ children, onClick, title }) {
 }
 
 Modal.propTypes = {
+  className: PropTypes.string,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string,
