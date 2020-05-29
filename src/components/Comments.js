@@ -7,13 +7,22 @@ import colors from "../assets/colors"
 import Info from "./elements/Info"
 
 export default function Comments({ comments, postId }) {
+  const sortComments = () => {
+    const _comments = comments.slice()
+    return _comments.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    )
+  }
+
+  const sortedComments = sortComments()
+
   return (
     <Fragment>
       <P>
         {comments.length} comment{comments.length === 0 ? "" : "s"}
       </P>
       <ul>
-        {comments.map(comment => (
+        {sortedComments.map(comment => (
           <Li key={comment.id}>
             <Info
               postId={postId}
