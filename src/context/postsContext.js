@@ -2,9 +2,9 @@ import React, { useReducer, createContext } from "react"
 import postsReducer from "./postsReducer"
 import { UPDATE_STATUS, FETCH_POSTS } from "./actionTypes"
 import client from "./../graphql/client"
-import { POSTS } from "../graphql/query"
+import { GET_POSTS } from "../graphql/query"
 
-const status = {
+export const status = {
   IDLE: "IDLE",
   PENDING: "PENDING",
   REJECTED: "REJECTED",
@@ -24,10 +24,10 @@ export default function PostsProvider({ children }) {
   function fetchPosts() {
     dispatch({ type: UPDATE_STATUS, payload: { status: status.PENDING } })
     client
-      .query({ query: POSTS })
+      .query({ query: GET_POSTS })
       .then(({ data }) => {
-        dispatch({ type: UPDATE_STATUS, payload: { status: status.RESOLVED } })
         dispatch({ type: FETCH_POSTS, payload: { posts: data.posts } })
+        dispatch({ type: UPDATE_STATUS, payload: { status: status.RESOLVED } })
       })
       .catch(error => {
         console.error(error)

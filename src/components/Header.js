@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
+import { Link } from "react-router-dom"
 import styled from "@emotion/styled"
 import colors from "./../assets/colors"
 import SearchForm from "./SearchForm"
@@ -7,8 +8,10 @@ import SearchForm from "./SearchForm"
 function Header() {
   return (
     <HeaderS>
-      <H1>Let's Talk</H1>
-      <SearchForm />
+      <H1>
+        <Link to="/">Let's Talk</Link>
+      </H1>
+      {/* <SearchForm /> */}
     </HeaderS>
   )
 }
