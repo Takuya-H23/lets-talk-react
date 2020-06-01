@@ -39,6 +39,7 @@ const H2 = styled.h2`
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1rem;
+  line-height: 1.2;
 `
 const Li = styled.li`
   border: 1px solid ${colors.rhythm};

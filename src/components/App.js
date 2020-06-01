@@ -13,7 +13,14 @@ function App() {
   const { loading, error, data } = useQuery(GET_POSTS)
 
   if (loading) return <p>Loading...</p>
-  if (error) return <p>Ops</p>
+  if (error)
+    return (
+      <p>
+        Sorry...
+        <br />
+        Something went wrong
+      </p>
+    )
   return (
     <div className="App">
       <GlobalCss />
