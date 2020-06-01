@@ -1,7 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost"
 
 const link = new HttpLink({
-  uri: "http://localhost:4000",
+  uri: process.env.REACT_APP_GRAPHQL,
 })
 
 const cache = new InMemoryCache()

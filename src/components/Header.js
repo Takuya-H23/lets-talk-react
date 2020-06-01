@@ -11,7 +11,7 @@ function Header() {
       <H1>
         <Link to="/">Let's Talk</Link>
       </H1>
-      <SearchForm />
+      {/* <SearchForm /> */}
     </HeaderS>
   )
 }

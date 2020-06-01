@@ -7,6 +7,7 @@ import styled from "@emotion/styled"
 import Section from "./Section"
 import colors from "../../assets/colors"
 import { AiOutlineCloseCircle } from "react-icons/ai"
+import mediaQueries from "../../assets/mediaQueries"
 
 export default function Modal({ children, onClick, title, className }) {
   const elRef = useRef(null)
@@ -61,6 +62,13 @@ const Container = styled(Section)`
   background: ${colors.white};
   border-radius: 3px 3px;
   box-shadow: 1.5px 2px 5px 0px rgba(0, 0, 0, 0.4);
+  width: 80vw;
+  ${mediaQueries["md"]} {
+    width: 50vw;
+  }
+  ${mediaQueries["lg"]} {
+    width: 40vw;
+  }
 `
 const HeaderS = styled.div(({ title }) => ({
   display: "flex",
@@ -69,6 +77,10 @@ const HeaderS = styled.div(({ title }) => ({
 
 const Title = styled.h3`
   font-size: 1.8rem;
+  color: ${colors.black};
+  ${mediaQueries["md"]} {
+    font-size: 2rem;
+  }
 `
 
 const CloseIcon = styled.div`
