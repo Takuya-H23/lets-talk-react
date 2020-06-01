@@ -1,6 +1,6 @@
 /**@jsx jsx */
 import { useState } from "react"
-import { jsx } from "@emotion/core"
+import { jsx, css } from "@emotion/core"
 import styled from "@emotion/styled"
 import { useParams } from "react-router-dom"
 import { useQuery, useMutation } from "@apollo/react-hooks"
@@ -15,6 +15,7 @@ import useInput from "./hooks/useInput"
 import { CREATE_COMMENT } from "../graphql/mutation"
 import { sendRequest } from "../functions/api"
 import { message } from "antd"
+import Textarea from "./elements/Textarea"
 
 export default function PostDetail() {
   const [showModal, setShowModal] = useState(false)
@@ -92,30 +93,40 @@ export default function PostDetail() {
       {showModal && (
         <Modal onClick={() => setShowModal(!showModal)} title="Create comment">
           <Form onSubmit={handleSubmit}>
-            <div>
-              <Label htmlFor="newPostKey">Key: </Label>
-              <input id="newPostKey" value={key} onChange={keyBind.onChange} />
-              {keyError ? <p>{keyError}</p> : null}
-            </div>
-            <div>
-              <Label htmlFor="newPostName">Name: </Label>
+            <InputWrapper>
+              <label htmlFor="newPostKey">Key: </label>
               <input
+                id="newPostKey"
+                value={key}
+                onChange={keyBind.onChange}
+                type="text"
+                css={input}
+              />
+              {keyError ? <p>{keyError}</p> : null}
+            </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="newPostName">Name: </label>
+              <input
+                type="text"
                 id="newNameKey"
                 value={commentName}
                 onChange={commentNameBind.onChange}
+                css={input}
               />
               {nameError ? <p>{nameError}</p> : null}
-            </div>
-            <div>
-              <Label htmlFor="newPostText">Text: </Label>
-              <input
+            </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="newPostText">Text: </label>
+              <Textarea
                 id="newPostText"
                 value={commentText}
                 onChange={commentTextBind.onChange}
               />
               {textError ? <p>{textError}</p> : null}
-            </div>
-            <Button type="submit">Submit</Button>
+            </InputWrapper>
+            <Button type="submit" css={button}>
+              Submit
+            </Button>
           </Form>
         </Modal>
       )}
@@ -136,9 +147,17 @@ const H1 = styled.h1`
   margin-right: 2rem;
 `
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;p
+  display: grid;
+  row-gap: 1rem;
 `
-const Label = styled.label`
-  display: block;
+const InputWrapper = styled.div`
+  display: grid;
+  row-gap: 0.3rem;
+`
+const input = css`
+  border: 1px solid ${colors.rhythm};
+  padding: 0.5rem;
+`
+const button = css`
+  margin-top: 2rem;
 `

@@ -18,6 +18,8 @@ import colors from "../../assets/colors"
 import Modal from "./Modal"
 import { sendRequest } from "../../functions/api"
 import { message } from "antd"
+import Textarea from "./Textarea"
+import Button from "./Button"
 
 export default function Options({ postId, commentId, type }) {
   const [showModal, setShowModal] = useState(false)
@@ -116,7 +118,7 @@ export default function Options({ postId, commentId, type }) {
 
       {showModal && currentModal === "update" && (
         <Modal onClick={closeModal} title={`Update ${type}`}>
-          <form
+          <Form
             onSubmit={e => {
               e.preventDefault()
               sendRequest([
@@ -131,21 +133,26 @@ export default function Options({ postId, commentId, type }) {
               type="text"
               value={key}
               onChange={keyBind.onChange}
+              css={input}
             />
             {keyError ? <p>{keyError}</p> : null}
-            <label htmlFor="update">
-              {type === "post" ? "Post" : "Comment"}
-            </label>
-            <textarea id="update" value={text} onChange={textBind.onChange} />
-            {textError ? <p>{textError}</p> : null}
-            <button type="submit">Send</button>
-          </form>
+            <InputWrapper>
+              <label htmlFor="update">
+                {type === "post" ? "Post" : "Comment"}
+              </label>
+              <Textarea id="update" value={text} onChange={textBind.onChange} />
+              {textError ? <p>{textError}</p> : null}
+            </InputWrapper>
+            <Button type="submit" css={button}>
+              Send
+            </Button>
+          </Form>
         </Modal>
       )}
 
       {showModal && currentModal === "delete" && (
         <Modal onClick={closeModal} title={`Delete ${type}`}>
-          <form
+          <Form
             onSubmit={e => {
               e.preventDefault()
               sendRequest([{ key, errorFn: setKeyError }])(sendDeleteRequest)
@@ -153,13 +160,14 @@ export default function Options({ postId, commentId, type }) {
           >
             <label htmlFor="deleteKey">Key: </label>
             <input
+              css={input}
               id="deleteKey"
               type="text"
               value={key}
               onChange={keyBind.onChange}
             />
             {keyError ? <p>{keyError}</p> : null}
-          </form>
+          </Form>
         </Modal>
       )}
     </div>
@@ -178,4 +186,20 @@ const icon = css`
 `
 const editIcon = css`
   margin-right: 0.5rem;
+`
+
+const Form = styled.form`
+  display: grid;
+  row-gap: 1rem;
+`
+const InputWrapper = styled.div`
+  display: grid;
+  row-gap: 0.3rem;
+`
+const button = css`
+  margin-top: 2rem;
+`
+const input = css`
+  border: 1px solid ${colors.rhythm};
+  padding: 0.5rem;
 `

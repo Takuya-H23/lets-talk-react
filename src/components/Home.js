@@ -1,6 +1,6 @@
 /**@jsx jsx */
 import { useState } from "react"
-import { jsx } from "@emotion/core"
+import { jsx, css } from "@emotion/core"
 import styled from "@emotion/styled"
 import Section from "./elements/Section"
 import PostCard from "./elements/PostCard"
@@ -12,6 +12,8 @@ import { CREATE_POST } from "../graphql/mutation"
 import { GET_POSTS } from "../graphql/query"
 import { useMutation } from "@apollo/react-hooks"
 import { message } from "antd"
+import colors from "../assets/colors"
+import Textarea from "./elements/Textarea"
 
 function Home({ posts }) {
   const [showModal, setShowModal] = useState(false)
@@ -56,30 +58,40 @@ function Home({ posts }) {
       {showModal && (
         <Modal title="Add new post" onClick={closeModal}>
           <Form onSubmit={handleSubmit}>
-            <div>
-              <Label htmlFor="newPostKey">Key: </Label>
-              <input id="newPostKey" value={key} onChange={keyBind.onChange} />
+            <InputWrapper>
+              <label htmlFor="newPostKey">Key: </label>
+              <input
+                id="newPostKey"
+                value={key}
+                onChange={keyBind.onChange}
+                type="text"
+                css={input}
+              />
               {keyError ? <p>{keyError}</p> : null}
-            </div>
-            <div>
-              <Label htmlFor="newPostName">Name: </Label>
+            </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="newPostName">Name: </label>
               <input
                 id="newNameKey"
                 value={name}
                 onChange={nameBind.onChange}
+                type="text"
+                css={input}
               />
               {nameError ? <p>{nameError}</p> : null}
-            </div>
-            <div>
-              <Label htmlFor="newPostText">Text: </Label>
-              <input
+            </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="newPostText">Text: </label>
+              <Textarea
                 id="newPostText"
                 value={text}
                 onChange={textBind.onChange}
               />
               {textError ? <p>{textError}</p> : null}
-            </div>
-            <Button type="submit">Submit</Button>
+            </InputWrapper>
+            <Button type="submit" css={button}>
+              Submit
+            </Button>
           </Form>
         </Modal>
       )}
@@ -92,22 +104,26 @@ function Home({ posts }) {
   )
 }
 
-// const AddPostBtn = styled(Button)`
-//   padding: 0.5rem;
-//   font-weight: bold;
-// `
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;p
-`
-const Label = styled.label`
-  display: block;
-`
 const Ul = styled.ul`
   list-style: none;
   display: grid;
   row-gap: 2rem;
   margin-top: 2rem;
+`
+const Form = styled.form`
+  display: grid;
+  row-gap: 1rem;
+`
+const InputWrapper = styled.div`
+  display: grid;
+  row-gap: 0.3rem;
+`
+const button = css`
+  margin-top: 2rem;
+`
+const input = css`
+  border: 1px solid ${colors.rhythm};
+  padding: 0.5rem;
 `
 
 export default Home
