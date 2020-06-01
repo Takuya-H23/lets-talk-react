@@ -1,7 +1,12 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost"
 
+const uri =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_GRAPHQL_PROD
+    : process.env.REACT_APP_GRAPHQL
+
 const link = new HttpLink({
-  uri: process.env.REACT_APP_GRAPHQL,
+  uri,
 })
 
 const cache = new InMemoryCache()

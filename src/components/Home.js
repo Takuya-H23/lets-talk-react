@@ -55,6 +55,10 @@ function Home({ posts }) {
   return (
     <Section>
       <Button onClick={() => setShowModal(true)}>New post</Button>
+      <P>
+        Creating posts and comments requires a "key" so you can edit/delete you
+        contents
+      </P>
       {showModal && (
         <Modal title="Add new post" onClick={closeModal}>
           <Form onSubmit={handleSubmit}>
@@ -103,6 +107,14 @@ function Home({ posts }) {
     </Section>
   )
 }
+
+const P = styled.p`
+  margin-top: 2rem;
+  font-weight: bold;
+  font-size: 1.8rem;
+  line-height: 1.2;
+  colors: ${colors.rhythm};
+`
 
 const Ul = styled.ul`
   list-style: none;
